@@ -12,6 +12,9 @@ group :testing, :development do
   gem 'launchy'
 end
 
+group :production do
+  gem 'rails_12factor'
+end
 
 # Use postgresql as the database for Active Record
 gem 'pg'
