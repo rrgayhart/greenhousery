@@ -3,8 +3,10 @@
     Email: <%= u.text_field :email %><br />
     Street Address: <%= u.text_field :street %><br />
     City: <%= u.text_field :city %><br />
-    State: <%= u.text_field :state %><br />
-    Country: <%= u.text_field :country %><br />
+    State: <%= select_tag :state, options_for_select(us_states) %><br />
+    Country: <%= u.text_field :country %> <br />
     <%= u.submit :value => "Start Planning" %>
   <% end %>
 </div>
+
+

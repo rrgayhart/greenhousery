@@ -11,7 +11,7 @@ describe "the signin process", :type => :feature do
       fill_in 'user_email', :with => 'user@example.com'
       fill_in 'user_street', :with => '1001 Sherman St.'
       fill_in 'user_city', :with => 'Denver'
-      fill_in 'user_state', :with => 'CO'
+      select('Colorado', :from => 'state')
       fill_in 'user_country', :with => 'USA'
     end
     click_button 'Start Planning'
