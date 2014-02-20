@@ -16,7 +16,7 @@ describe "the signin process", :type => :feature do
     end
     click_button 'Start Planning'
     expect(page).to have_content 'Project Site'
-    expect(page).to have_content 'Latitude: 28.9876'
-    expect(page).to have_content 'Longitude: - 89.1037872'
+    expect(page).to have_content 'Latitude: 39.732238'
+    expect(page).to have_content 'Longitude: -104.985251'
   end
 end
