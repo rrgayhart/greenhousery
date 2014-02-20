@@ -2,8 +2,12 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
-gem 'rspec-rails'
 gem 'geocoder'
+
+group :testing, :development do
+  gem 'rspec-rails'
+  gem 'capybara'
+end
 
 
 # Use postgresql as the database for Active Record
