@@ -1,5 +1,13 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  it 'should add geolocation on save' do
+    user = User.new(email: 'example@example.com', street: '112 Main St.', city: 'New Orleans', state: 'LA', country: 'USA')
+    user.latitude.should eq(nil)
+    user.save
+    user.latitude.should eq(29.8806539)
+    user.longitude.should eq(-89.94404809999999)
+  end
+
 end
