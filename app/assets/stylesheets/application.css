@@ -11,3 +11,10 @@
  *= require_self
  *= require_tree .
  */
+
+#map {
+  height: 800px;
+  max-width: 50%;
+  border: solid 1px #DDD;
+  border-radius: 5px;*/*/
+}

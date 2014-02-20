@@ -1,3 +1,17 @@
+ <style type="text/css">
+            #controlToggle li {
+                list-style: none;
+            }
+            p {
+                width: 512px;
+            }
+
+            /* avoid pink tiles */
+            .olImageLoadError {
+                background-color: transparent !important;
+            }
+</style>
+
 Project Site
 
 <div id="project-sidebar">
@@ -5,6 +19,234 @@ Project Site
   Longitude: <%= @user.longitude %>
 </div>
 
-<div id="project-map">
+<br />
 
-</div>
+<div>
+  <div id="map" class="smallmap"></div>
+    
+        <ul id="controlToggle">
+            <li>
+                <input type="radio" name="type" value="none" id="noneToggle"
+                       onclick="toggleControl(this);" checked="checked" />
+                <label for="noneToggle">navigate</label>
+            </li>
+            <li>
+                <input type="radio" name="type" value="point" id="pointToggle" onclick="toggleControl(this);" />
+                <label for="pointToggle">draw point</label>
+            </li>
+            <li>
+                <input type="radio" name="type" value="line" id="lineToggle" onclick="toggleControl(this);" />
+                <label for="lineToggle">draw line</label>
+            </li>
+            <li>
+                <input type="radio" name="type" value="polygon" id="polygonToggle" onclick="toggleControl(this);" />
+                <label for="polygonToggle">draw polygon</label>
+            </li>
+            <li>
+                <input type="radio" name="type" value="box" id="boxToggle" onclick="toggleControl(this);" />
+                <label for="boxToggle">draw box</label>
+            </li>
+            <li>
+                <input type="checkbox" name="allow-pan" value="allow-pan" id="allowPanCheckbox" checked=true onclick="allowPan(this);" />
+                <label for="allowPanCheckbox">allow pan while drawing</label>
+            </li>
+        </ul>
+<div>
+  
+<script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+<script type="text/javascript">
+  var map, drawControls;
+            function init(){
+                map = new OpenLayers.Map('map');
+
+                var gsat = new OpenLayers.Layer.Google(
+    "Google Satellite",
+    {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+    // used to be {type: G_SATELLITE_MAP, numZoomLevels: 22}
+);
+
+                var pointLayer = new OpenLayers.Layer.Vector("Point Layer");
+                var lineLayer = new OpenLayers.Layer.Vector("Line Layer");
+                var polygonLayer = new OpenLayers.Layer.Vector("Polygon Layer");
+                var boxLayer = new OpenLayers.Layer.Vector("Box layer");
+
+                map.addLayers([gsat, pointLayer, lineLayer, polygonLayer, boxLayer]);
+                map.addControl(new OpenLayers.Control.LayerSwitcher());
+                map.addControl(new OpenLayers.Control.MousePosition());
+
+                drawControls = {
+                    point: new OpenLayers.Control.DrawFeature(pointLayer,
+                        OpenLayers.Handler.Point),
+                    line: new OpenLayers.Control.DrawFeature(lineLayer,
+                        OpenLayers.Handler.Path),
+                    polygon: new OpenLayers.Control.DrawFeature(polygonLayer,
+                        OpenLayers.Handler.Polygon),
+                    box: new OpenLayers.Control.DrawFeature(boxLayer,
+                        OpenLayers.Handler.RegularPolygon, {
+                            handlerOptions: {
+                                sides: 4,
+                                irregular: true
+                            }
+                        }
+                    )
+                };
+
+                for(var key in drawControls) {
+                    map.addControl(drawControls[key]);
+                }
+
+                map.setCenter(new OpenLayers.LonLat(0, 0), 3);
+
+                document.getElementById('noneToggle').checked = true;
+            }
+
+            function toggleControl(element) {
+                for(key in drawControls) {
+                    var control = drawControls[key];
+                    if(element.value == key && element.checked) {
+                        control.activate();
+                    } else {
+                        control.deactivate();
+                    }
+                }
+            }
+
+            function allowPan(element) {
+                var stop = !element.checked;
+                for(var key in drawControls) {
+                    drawControls[key].handler.stopDown = stop;
+                    drawControls[key].handler.stopUp = stop;
+                }
+            }
+        </script>
+
+<!-- 
+<script type="text/javascript">
+  var wmsUrl = "http://localhost:3000/geoserver/wms",
+    wmsLayer = null,
+    mapObject = null,
+    baseLayer = null;
+
+  var setCenter = function() {
+    mapObject.setCenter(new OpenLayers.LonLat(-70.6503, -33.439).transform(
+      new OpenLayers.Projection("EPSG:4326"),
+      new OpenLayers.Projection("EPSG:900913")), 10);
+  };
+
+  var bindExampleBtnsClick = function() {
+    $("#example-a-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer();
+    });
+
+    $("#example-b-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({cql_filter: "BBOX(the_geom, 100, 40, -100, -40)"});
+    });
+
+    $("#example-c-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "female_point"});
+    });
+
+    $("#example-d-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "male_point"});
+    });
+
+    $("#example-e-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "gender_point"});
+    });
+
+    $("#example-f-link").click(function(e) {
+      e.preventDefault();
+      getPoints();
+    });
+
+    $("#example-g-link").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "zoom_point"});
+    });
+
+    $("#example-h-link").click(function(e) {
+      e.preventDefault();
+      $.get("home/distance", function(data) {
+        var result = "" +
+        "<div>Cliente 1: lat: " + data["one"]["lat"] + " lon: " + data["one"]["lon"] + "</div>" +
+        "<div>Cliente 2: lat: " + data["two"]["lat"] + " lon: " + data["two"]["lon"] + "</div>" +
+        "<div>distancia: " + data["distance"] + "</div>"
+        $("#result").html(result);
+      });
+    });
+
+    $("#age-filter-btn").click(function(e) {
+      e.preventDefault();
+      showWmsLayer({styles: "label_point", cql_filter: ("age > " + $("#age-input").val())})
+    });
+  };
+
+  var getPoints = function() {
+    $.get("home/points", function(points) {
+        var features = []
+        var vectorLayer = new OpenLayers.Layer.Vector("Vector layer", {projection: new OpenLayers.Projection("EPSG:900913")});
+
+        for(var i = 0; i < points.length; i++){
+            var geom = new OpenLayers.Geometry.fromWKT(points[i]["the_geom"]);
+            var pointFeature = new OpenLayers.Feature.Vector(geom.transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913")), null, null);
+            features.push(pointFeature);
+        }
+
+        mapObject.addLayer(vectorLayer);
+        vectorLayer.addFeatures(features);
+        vectorLayer.refresh();
+    });
+  };
+
+  var removeWmsLayer = function() {
+    if (wmsLayer) {
+      mapObject.removeLayer(wmsLayer);
+      delete wmsLayer;
+    }
+  };
+
+  var showWmsLayer = function(options) {
+    removeWmsLayer();
+
+    var defaultOptions = {
+      srs: "EPSG:4326",
+      layers: "geoapp:clients",
+      format: "image/png",
+      tiled: true,
+      transparent: true,
+    }
+
+    var mergedOptions = $.extend(defaultOptions, options);
+
+    wmsLayer = new OpenLayers.Layer.WMS("geoapp:clients", wmsUrl, mergedOptions);
+    mapObject.addLayer(wmsLayer);
+  };
+
+  var initMap = function(){
+    mapObject = new OpenLayers.Map({
+      div: 'map',
+      numZoomLevels: 30,
+      projection: "EPSG:900913",
+      maxResolution: 156543,
+      maxExtent: new OpenLayers.Bounds(-20037508,-20037508,20037508,20037508),
+    });
+
+    baseLayer = new OpenLayers.Layer.OSM();
+    mapObject.addLayer(baseLayer);
+
+    mapObject.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
+    mapObject.addControl(new OpenLayers.Control.OverviewMap());
+    mapObject.addControl(new OpenLayers.Control.KeyboardDefaults());
+
+    setCenter();
+  };
+
+  bindExampleBtnsClick();
+  initMap();
+</script>
+ -->
