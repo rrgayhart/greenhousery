@@ -7,6 +7,7 @@ gem 'geocoder'
 group :testing, :development do
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'launchy'
 end
 
 

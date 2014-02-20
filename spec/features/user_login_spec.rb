@@ -8,13 +8,15 @@ describe "the signin process", :type => :feature do
   it "gets geolocation data" do
     visit '/'
     within("#user-data") do
-      fill_in 'Email', :with => 'user@example.com'
-      fill_in 'Street', :with => '1001 Sherman St.'
-      fill_in 'City', :with => 'Denver'
-      fill_in 'State', :with => 'CO'
-      fill_in 'Country', :with => 'USA'
+      fill_in 'user_email', :with => 'user@example.com'
+      fill_in 'user_street', :with => '1001 Sherman St.'
+      fill_in 'user_city', :with => 'Denver'
+      fill_in 'user_state', :with => 'CO'
+      fill_in 'user_country', :with => 'USA'
     end
-    click_link 'Start Planning'
+    click_button 'Start Planning'
     expect(page).to have_content 'Project Site'
+    expect(page).to have_content 'Latitude: 28.9876'
+    expect(page).to have_content 'Longitude: - 89.1037872'
   end
 end
