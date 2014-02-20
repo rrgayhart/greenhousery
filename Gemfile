@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.2'
 gem 'geocoder'
 gem 'openlayers-rails'
+gem 'gon'
 
 group :testing, :development do
   gem 'rspec-rails'

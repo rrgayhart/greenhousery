@@ -32,10 +32,8 @@
             map.addLayers([ghyb]);
             map.addControl(new OpenLayers.Control.LayerSwitcher());
             map.addControl(new OpenLayers.Control.MousePosition());
-            // map.setCenter(new GLatLng((39,-104),15);;
-            // map.setCenter(new OpenLayers.LonLat(698604,7026208),15);
             var proj = new OpenLayers.Projection("EPSG:4326");
-            var point = new OpenLayers.LonLat(-104.985251, 39.732238);
+            var point = new OpenLayers.LonLat(gon.longitude, gon.latitude);
             point.transform(proj, map.getProjectionObject());
 
             map.setCenter((point), 16);
