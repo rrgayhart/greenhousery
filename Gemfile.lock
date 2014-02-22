@@ -45,6 +45,8 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.0.2)
+    factory_girl (4.3.0)
+      activesupport (>= 3.0.0)
     geocoder (1.1.9)
     gon (5.0.1)
       actionpack (>= 2.3.0)
@@ -148,6 +150,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.0)
+  factory_girl
   geocoder
   gon
   jbuilder (~> 1.2)

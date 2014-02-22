@@ -10,4 +10,10 @@ describe User do
     user.longitude.should eq(-89.94404809999999)
   end
 
+  it "should be able to have a project" do
+    user = FactoryGirl.create(:user)
+    project = FactoryGirl.create(:project, user: user)
+    user.projects.first.should eq(project)
+  end
+
 end

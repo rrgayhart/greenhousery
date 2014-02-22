@@ -35,8 +35,8 @@
             var proj = new OpenLayers.Projection("EPSG:4326");
             var point = new OpenLayers.LonLat(gon.longitude, gon.latitude);
             point.transform(proj, map.getProjectionObject());
-
             map.setCenter((point), 18);
+
             // style the sketch fancy
             var sketchSymbolizers = {
                 "Point": {
@@ -149,6 +149,10 @@
                 control.setImmediate(element.checked);
             }
         }
+
+        document.getElementById("finishSketch").onclick = function() {
+    draw.finishSketch();
+};
     </script>
     <h1 id="title">Project Site</h1>
     <div id="map" class="smallmap"></div>
@@ -176,6 +180,9 @@
             <li>
                 <input type="checkbox" name="immediate" id="immediateToggle" onclick="toggleImmediate(this);" />
                 <label for="immediateToggle">use immediate measures</label>
+            </li>
+            <li>
+              <a href="#" id="finishSketch">finish sketch</a>
             </li>
         </ul>
     </div>
