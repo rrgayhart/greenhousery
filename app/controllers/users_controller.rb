@@ -8,7 +8,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to root_url, :notice => "Signed up!"
+      auto_login(@user)
+      redirect_to @user, :notice => "Signed up!"
     else
       #flash[:alert] = "Something went wrong!"
       render :new

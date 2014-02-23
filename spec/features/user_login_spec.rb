@@ -15,8 +15,8 @@ describe "existing user in the signin process", :type => :feature do
   it 'can log in and log out' do
     visit '/'
     click_link 'Login'
-    fill_in 'sessions_email', :with => 'example@example.com'
-    fill_in 'sessions_password', :with => 'password'
+    fill_in 'email', :with => 'example@example.com'
+    fill_in 'password', :with => 'password'
     click_button 'Login'
     page.should have_content('Logout')
     click_link 'Logout'
@@ -32,7 +32,7 @@ describe 'the project process', :type => :feature do
     within("#user-data") do
       fill_in 'user_email', :with => 'user@example.com'
       fill_in 'user_password', :with => 'password'
-      fill_in 'user_confirmation', :with => 'password'
+      fill_in 'user_password_confirmation', :with => 'password'
       click_button 'Sign Up'
     end
 

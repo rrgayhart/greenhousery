@@ -5,9 +5,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = login(params[:email], params[:password])
+    user = login(params[:email], params[:password], params[:remember_me])
     if user
-      redirect_back_or_to root_url, :notice => "You are now logged in"
+      redirect_to user, :notice => "You are now logged in"
     else
       flash.now.alert = "Email or password was invalid"
       render :new
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:sessions).permit(:email, :password, :password_confirmation)
+    params.require(:sessions).permit(:email, :password, :password_confirmation, :remember_me_token, :remember_me_token_expires_at)
   end
 
 end
