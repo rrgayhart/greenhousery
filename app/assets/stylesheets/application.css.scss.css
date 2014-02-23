@@ -18,3 +18,32 @@
   border: solid 1px #DDD;
   border-radius: 5px;
 }
+
+.flash-message a {
+  text-align: right;
+}
+
+.flash-message {
+  &.error {
+    border: solid 4px #900;
+          background-color: #FF6565;
+        }
+  &.info {
+    border: solid 4px #26722D;
+          background-color: #A4E7A0;
+        }
+  &.success {
+    border: solid 4px #26722D;
+          background-color: #A4E7A0;
+        }
+  &.warning {
+    border: solid 4px #900;
+          background-color: #FF6565;
+        }
+  z-index: 999;
+  width: 80%;
+  margin: 20px;
+        p {
+          margin: 15px 0;
+        }
+}

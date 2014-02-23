@@ -1,2 +1,10 @@
-<h1>Sessions#new</h1>
-<p>Find me in app/views/sessions/new.html.erb</p>
+<h1>Greenhouser</h1>
+<h3>Log In</h3>
+
+<%= form_for(:sessions, :url => sessions_path) do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %> <br>
+  <%= f.label :password %>
+  <%= f.password_field :password %> <br>
+  <%= f.submit "Login" %>
+<% end %>

@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require openlayers-rails
+//= require flash-customization
 //= require_tree .

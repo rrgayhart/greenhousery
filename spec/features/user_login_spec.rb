@@ -12,12 +12,16 @@ describe "existing user in the signin process", :type => :feature do
     page.should have_no_content('Logout')
   end
 
-  it 'can log in'
-    #assert page has log in
-    #log in
-    #assert page does not have log in
-  it 'can log out'
-
+  it 'can log in and log out' do
+    visit '/'
+    click_link 'Login'
+    fill_in 'sessions_email', :with => 'example@example.com'
+    fill_in 'sessions_password', :with => 'password'
+    click_button 'Login'
+    page.should have_content('Logout')
+    click_link 'Logout'
+    page.should have_content('Login')
+  end
 end
 
 describe 'the project process', :type => :feature do

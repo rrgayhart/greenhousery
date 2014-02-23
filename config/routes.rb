@@ -1,12 +1,13 @@
 Greenhousery::Application.routes.draw do
   resources :users
   resources :projects
+  resources :sessions
 
   get "home/about"
   get "home/index"
   get "home/test"
-  get "login" => "sessions/new", :as => "login"
-  get "logout" => "sessions/destroy", :as => "logout"
+  get "login" => "sessions#new", :as => "login"
+  get "logout" => "sessions#destroy", :as => "logout"
   get "signup" => "users#new", :as => "signup"
 
   root 'home#index'
