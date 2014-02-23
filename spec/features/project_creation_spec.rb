@@ -24,5 +24,8 @@ describe "starting a new project", :type => :feature do
     expect(page).to have_content 'Small Solar Project'
     expect(page).to have_content 'Latitude: 39.732238'
     expect(page).to have_content 'Longitude: -104.985251'
+
+    click_link 'Dashboard'
+    expect(page).to have_link 'Small Solar Project'
   end
 end

@@ -33,6 +33,6 @@ describe 'user signing up', :type => :feature do
     fill_in 'user_password', :with => 'password'
     fill_in 'user_password_confirmation', :with => 'password'
     click_button 'Sign Up'
-    expect(page).to have_content('Your Projects')
+    expect(page).to have_content('Dashboard')
   end
 end

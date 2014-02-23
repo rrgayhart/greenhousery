@@ -1,8 +1,15 @@
-<div id="projects">
-  Your Projects
+<% if current_user.projects.any? %>
+  <div id="projects">
+    <h3>Your Projects</h3>
+    <ul>
+      <% current_user.projects.each do |project| %>
+        <li><%= link_to "#{project.name}", project_path(project) %> </li>
+      <% end %>
+    <ul>
+  </div>
+<% end %>  
+
+<div id="new-project">
+  <%= button_to('Start a New Project', new_project_path, :method => :get) %>
 </div>
 
-
-<%= button_to('Start a New Project', new_project_path, :method => :get) %>
-
-<%= link_to 'Logout', logout_path %>
