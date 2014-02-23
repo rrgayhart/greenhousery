@@ -1,4 +1,5 @@
 Greenhousery::Application.routes.draw do
+  get "sessions/new"
   resources :users
   resources :projects
   root 'users#new'

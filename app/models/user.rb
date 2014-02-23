@@ -1,4 +1,5 @@
  class User < ActiveRecord::Base
+  authenticates_with_sorcery!
   geocoded_by :address
   after_validation :geocode
   has_many :projects
