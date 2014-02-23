@@ -1,0 +1,9 @@
+<h1> <%= @project.name %> </h1>
+
+<div id="project-sidebar">
+  Latitude: <%= @project.latitude %>
+  Longitude: <%= @project.longitude %>
+</div>
+
+Double Click when you have completed your outline of the roof or ground area
+<%= render "maps/map" %>

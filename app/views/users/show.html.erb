@@ -1,9 +1,7 @@
-<div id="project-sidebar">
-  Latitude: <%= @user.latitude %>
-  Longitude: <%= @user.longitude %>
+<div id="projects">
+  Your Projects
 </div>
 
-Double Click when you have completed your outline of the roof or ground area
-<%= render "maps/map" %>
 
+<%= button_to('Start a New Project', new_project_path, :method => :get) %>
 

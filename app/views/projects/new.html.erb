@@ -1,0 +1,10 @@
+<div id="project-data">
+  <%= form_for @project do |u| %>
+    Project Name: <%= u.text_field :name %><br />
+    Street Address: <%= u.text_field :street %><br />
+    City: <%= u.text_field :city %><br />
+    State: <%= select_tag :state, options_for_select(us_states) %><br />
+    Country: <%= u.text_field :country %> <br />
+    <%= u.submit :value => "Start Planning" %>
+  <% end %>
+</div>
