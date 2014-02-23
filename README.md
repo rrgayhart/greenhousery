@@ -22,6 +22,8 @@ Green Project Planning
 
 http://greenhousery.herokuapp.com/
 
+![alt text](https://github.com/rrgayhart/greenhousery/blob/master/presentation/areapreview.png?raw=true "Presentation of Project Map")
+
 ## License
 
 MIT License
