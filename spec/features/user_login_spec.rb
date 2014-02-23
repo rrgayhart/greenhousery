@@ -24,31 +24,15 @@ describe "existing user in the signin process", :type => :feature do
   end
 end
 
-describe 'the project process', :type => :feature do
+describe 'user signing up', :type => :feature do
 
-  it "provides geolocation data" do
+  it "is automatically logged in" do
     visit '/'
     click_link 'Sign Up'
-    within("#user-data") do
-      fill_in 'user_email', :with => 'user@example.com'
-      fill_in 'user_password', :with => 'password'
-      fill_in 'user_password_confirmation', :with => 'password'
-      click_button 'Sign Up'
-    end
-
-    click_button 'Start a New Project'
-
-    within("#project-data") do
-      fill_in 'project_name', :with => 'Small Solar Project'
-      fill_in 'project_street', :with => '1001 Sherman St.'
-      fill_in 'project_city', :with => 'Denver'
-      select('Colorado', :from => 'state')
-      fill_in 'project_country', :with => 'USA'
-    end
-    click_button 'Start Planning'
-
-    expect(page).to have_content 'Small Solar Project'
-    expect(page).to have_content 'Latitude: 39.732238'
-    expect(page).to have_content 'Longitude: -104.985251'
+    fill_in 'user_email', :with => 'user@example.com'
+    fill_in 'user_password', :with => 'password'
+    fill_in 'user_password_confirmation', :with => 'password'
+    click_button 'Sign Up'
+    expect(page).to have_content('Your Projects')
   end
 end
