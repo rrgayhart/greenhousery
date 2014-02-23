@@ -5,5 +5,7 @@ FactoryGirl.define do
     city 'New Orleans'
     state 'LA'
     country 'USA'
+    password 'password'
+    password_confirmation 'password'
   end
 end

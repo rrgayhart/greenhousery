@@ -1,8 +1,15 @@
 Greenhousery::Application.routes.draw do
-  get "sessions/new"
   resources :users
   resources :projects
-  root 'users#new'
+
+  get "home/about"
+  get "home/index"
+  get "home/test"
+  get "login" => "sessions/new", :as => "login"
+  get "logout" => "sessions/destroy", :as => "logout"
+  get "signup" => "users#new", :as => "signup"
+
+  root 'home#index'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
