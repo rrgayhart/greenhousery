@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :require_login, :only => [:new]
+  skip_before_filter :require_login, :only => [:new, :create]
 
   def new
     @user = User.new
@@ -8,9 +8,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user
+      redirect_to root_url, :notice => "Signed up!"
     else
-      render 'new'
+      #flash[:alert] = "Something went wrong!"
+      render :new
     end
   end
 
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :street, :city, :state, :country, :password)
+    params.require(:user).permit(:email, :street, :city, :state, :country, :password, :password_confirmation)
   end
 
 end

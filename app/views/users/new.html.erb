@@ -1,7 +1,22 @@
 <div id="user-data">
-  <%= form_for @user do |u| %>
-    Email: <%= u.text_field :email %><br />
-    <%= u.submit :value => "Sign Up" %>
+  <%= form_for @user do |f| %>
+    <% if @user.errors.any? %>
+      <div class="error_message">
+        <h2>Form is invalid</h2>
+        <ul>
+          <% for message in @user.errors.full_messages %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= f.label :email %>
+    <%= f.text_field :email %><br />
+    <%= f.label :password %>
+    <%= f.password_field :password %> <br />
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %> <br />
+    <%= f.submit :value => "Sign Up" %>
   <% end %>
 </div>
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   
-  it 'should add geolocation on save' do
+  xit 'should add geolocation on save' do
     user = User.new(email: 'example@example.com', street: '112 Main St.', city: 'New Orleans', state: 'LA', country: 'USA')
     user.latitude.should eq(nil)
     user.save

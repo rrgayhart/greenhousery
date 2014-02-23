@@ -1,10 +1,10 @@
 <h1>Greenhouser</h1>
 <h3>Log In</h3>
 
-<%= form_for(:sessions, :url => sessions_path) do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email %> <br>
-  <%= f.label :password %>
-  <%= f.password_field :password %> <br>
-  <%= f.submit "Login" %>
+<%= form_tag sessions_path do %>
+  <%= label_tag :email %>
+  <%= text_field_tag :email, params[:email] %><br />
+  <%= label_tag :password %>
+  <%= password_field_tag :password %> <br />
+  <%= submit_tag "Log in" %>
 <% end %>
