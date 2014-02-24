@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user_id = current_user.id if current_user
     if @project.save
+      @project_array = ProjectArray.create(project: @project)
       redirect_to @project
     else
       render 'new'
@@ -17,6 +18,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @project_arrays = @project.project_arrays
     gon.latitude = @project.latitude
     gon.longitude = @project.longitude
   end

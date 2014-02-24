@@ -1,4 +1,6 @@
-<h1> <%= best_in_place @project, :name %> </h1>
+<div id="project-header">
+  <h1> <%= best_in_place @project, :name %> </h1>
+</div>
 
 <div id="project-sidebar">
   <p>
@@ -16,10 +18,13 @@
    <%= best_in_place @project, :state %> |
    <%= best_in_place @project, :country %>
   </p>
-  <p>
-    <b>Square Footage:</b>
-    <%= @project.sqft %>
-  </p>
+</div>
+
+<div id='project-array-data'>
+  <h2>Add Array Details</h2>
+  <% @project_arrays.each do |project_array| %>
+    <%= best_in_place project_array, :name %>
+  <% end %>
 </div>
 
 <div>

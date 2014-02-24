@@ -29,5 +29,14 @@ describe "starting a new project", :type => :feature do
     expect(page).to have_link 'Small Solar Project'
     click_link 'Small Solar Project'
     expect(page).to have_content 'Latitude: 39.732238'
+    
+   # within("#project-header") do
+   #   bip_text Project.last, :name, 'Smaller Solar Project'
+   #   expect(page).to have_content 'Smaller Solar Project'
+   # end
+
+    within("#project-array-data") do
+      expect(page).to have_content 'Add Array Details'  
+    end
   end
 end
