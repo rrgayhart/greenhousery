@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140224170918) do
+ActiveRecord::Schema.define(version: 20140224192649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "points", force: true do |t|
+    t.integer "project_array_id"
+    t.decimal "x_coordinate"
+    t.decimal "y_coordinate"
+    t.decimal "z_coordinate"
+    t.decimal "length"
+  end
+
+  add_index "points", ["project_array_id"], name: "index_points_on_project_array_id", using: :btree
 
   create_table "project_arrays", force: true do |t|
     t.string  "name"

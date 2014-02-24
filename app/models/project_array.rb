@@ -1,5 +1,6 @@
 class ProjectArray < ActiveRecord::Base
   belongs_to :project
+  has_many :points
   validates :project_id, presence: true
   after_validation :set_name
   

@@ -24,5 +24,10 @@ describe ProjectArray do
       project.project_arrays.first.should eq(project_array)
       project_array.project.should eq(project)
     end
+
+    it 'should have points' do
+      project_array = FactoryGirl.create(:project_array, project: project)
+      project_array.points.count.should eq(0)
+    end
   end
 end
