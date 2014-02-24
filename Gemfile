@@ -6,7 +6,7 @@ gem 'geocoder'
 gem 'openlayers-rails'
 gem 'gon'
 gem 'sorcery'
-
+gem 'best_in_place'
 
 group :testing, :development do
   gem 'rspec-rails'

@@ -1,9 +1,25 @@
-<h1> <%= @project.name %> </h1>
+<h1> <%= best_in_place @project, :name %> </h1>
 
 <div id="project-sidebar">
-  Latitude: <%= @project.latitude %>
-  Longitude: <%= @project.longitude %><br />
-  <%= @project.address %>
+  <p>
+    <b>Latitude:</b> 
+    <%= @project.latitude %>
+  </p>
+  <p>
+    <b>Longitude:</b>
+    <%= @project.longitude %>
+  </p>
+  <p>
+   <b>Address:</b>
+   <%= best_in_place @project, :street %> |
+   <%= best_in_place @project, :city %> |
+   <%= best_in_place @project, :state %> |
+   <%= best_in_place @project, :country %>
+  </p>
+  <p>
+    <b>Square Footage:</b>
+    <%= @project.sqft %>
+  </p>
 </div>
 
 <div>

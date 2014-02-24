@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  respond_to :html, :json  
 
   def new
     @project = Project.new
@@ -18,6 +19,15 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     gon.latitude = @project.latitude
     gon.longitude = @project.longitude
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    @project.update_attributes(project_params)
+    respond_with @project
+  end
+ 
+  def edit
   end
 
   private
