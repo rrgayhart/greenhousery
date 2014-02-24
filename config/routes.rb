@@ -1,6 +1,7 @@
 Greenhousery::Application.routes.draw do
   resources :users
   resources :projects
+  resources :project_arrays
   resources :sessions
 
   get "home/about"
