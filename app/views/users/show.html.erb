@@ -3,7 +3,8 @@
     <h3>Your Projects</h3>
     <ul>
       <% current_user.projects.each do |project| %>
-        <li><%= link_to "#{project.name}", project_path(project) %> </li>
+        <li><%= link_to "#{project.name}", project_path(project) %> 
+          <%= project.address %></li>
       <% end %>
     <ul>
   </div>
