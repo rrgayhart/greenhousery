@@ -36,7 +36,8 @@ describe "starting a new project", :type => :feature do
    # end
 
     within("#project-array-data") do
-      expect(page).to have_content 'Add Array Details'  
+      expect(page).to have_content 'Add Array Details'
+      expect(page).to have_content 'Small Solar Project Array'
     end
   end
 end

@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+class ProjectArraysController < ApplicationController
   respond_to :html, :json  
 
   def new
