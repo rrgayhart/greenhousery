@@ -31,8 +31,11 @@
     var ghyb = new OpenLayers.Layer.Google(
       "Google Hybrid",
       {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
-  );
+    );
+
+  
   map.addLayers([ghyb]);
+
   map.addControl(new OpenLayers.Control.LayerSwitcher());
   map.addControl(new OpenLayers.Control.MousePosition());
   var proj = new OpenLayers.Projection("EPSG:4326");
@@ -44,21 +47,39 @@
   function handleMapClick(e)
   {
     var lonlat = map.getLonLatFromViewPortPx(e.xy);
+    var lon = lonlat.lon
+    var lat = lonlat.lat
     var element = document.getElementById('output');
+    var latElement = document.getElementById('lat');
+    var lonElement = document.getElementById('lon');
     var out = "";
-    out += "coordinates: " + lonlat;
+    out += "coordinates: " + "longitude: " + lon + " latitude: " + lat;
     element.innerHTML = out;
+    latElement.innerHTML = lat;
+    lonElement.innerHTML = lon;
   }
 };
 </script>
 
 
     <h1 id="title">Project Site</h1>
+    <div id="output">
+    </div>
+    Latitude: <span id="lat"></span><br />
+    Longitude: <span id="lon"></span>
+    
+    <%= form_tag('/format_point', method: 'post') do %>
+      <%= label_tag :x_coordinate %>
+      <%= text_field_tag :x_coordinate, params[:x_coordinate]%>
+      <%= text_field_tag :y_coordinate, params[:y_coordinate]%>
+      <%= hidden_field_tag :project_array_id,
+      @project.project_arrays.first.id %>
+      <%= submit_tag "Create Point" %>
+    <% end %>
+
     <div id="map" class="smallmap"></div>
     <div id="options">
-        <div id="output">
-        </div>
-        <ul id="controlToggle">
+      <ul id="controlToggle">
             <li>
                 <input type="radio" name="type" value="none" id="noneToggle"
                        onclick="toggleControl(this);" checked="checked" />

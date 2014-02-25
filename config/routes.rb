@@ -1,4 +1,5 @@
 Greenhousery::Application.routes.draw do
+  resources :points
   resources :users
   resources :projects
   resources :project_arrays
@@ -10,6 +11,8 @@ Greenhousery::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
   get "signup" => "users#new", :as => "signup"
+  
+  post "format_point" => "points#format_point", :as => "format"
 
   root 'home#index'
   
