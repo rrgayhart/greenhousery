@@ -1,33 +1,27 @@
 <style type="text/css">
+        #controls {
+            width: 512px;
+        }
+        #controlToggle {
+            padding-left: 1em;
+        }
         #controlToggle li {
             list-style: none;
         }
-        #controlToggle {
-          padding-left: 1em;
-        }
-        #controls {
-          width: 512px;
-        }
-
-        /* avoid pink tiles */
-        .olImageLoadError {
-            background-color: transparent !important;
-        }
-    </style>
-
-
-
+</style>
 
 <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+
 <script type="text/javascript">
-  var map, vectors, controlls;
+  var map, vectors, controls;
   function init(){
     map = new OpenLayers.Map('map');
-            
+
     var ghyb = new OpenLayers.Layer.Google(
       "Google Hybrid",
       {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
     );
+
     OpenLayers.Feature.Vector.style['default']['strokeWidth'] = '2';
 
     var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
@@ -37,6 +31,37 @@
       renderers: renderer
     });
 
+    map.addLayers([ghyb, vectors]);
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.addControl(new OpenLayers.Control.MousePosition());
+            
+    if (console && console.log) {
+      function report(event) {
+        console.log(event.type, event.feature ? event.feature.id : event.components);
+      }
+      vectors.events.on({
+        "beforefeaturemodified": report,
+        "featuremodified": report,
+        "afterfeaturemodified": report,
+        "vertexmodified": report,
+        "sketchmodified": report,
+        "sketchstarted": report,
+        "sketchcomplete": report
+       });
+     }
+     controls = {
+       point: new OpenLayers.Control.DrawFeature(vectors, OpenLayers.Handler.Point),
+       line: new OpenLayers.Control.DrawFeature(vectors, OpenLayers.Handler.Path),
+       polygon: new OpenLayers.Control.DrawFeature(vectors, OpenLayers.Handler.Polygon),
+       regular: new OpenLayers.Control.DrawFeature(vectors,
+      OpenLayers.Handler.RegularPolygon, {handlerOptions: {sides: 5}}),
+       modify: new OpenLayers.Control.ModifyFeature(vectors)
+     };
+            
+     for(var key in controls) {
+       map.addControl(controls[key]);
+     }
+            
   map.addLayers([ghyb, vectors]);
   map.addControl(new OpenLayers.Control.LayerSwitcher());
   map.addControl(new OpenLayers.Control.MousePosition());
@@ -45,74 +70,56 @@
   var point = new OpenLayers.LonLat(gon.longitude, gon.latitude);
   point.transform(proj, map.getProjectionObject());
   map.setCenter((point), 18);
-
-  if (console && console.log) {
-    function report(event) {
-      console.log(event.type, event.feature ? event.feature.id : event.components);
+        }
+        
+  function update() {
+    // reset modification mode
+    controls.modify.mode = OpenLayers.Control.ModifyFeature.RESHAPE;
+    var rotate = document.getElementById("rotate").checked;
+    if(rotate) {
+      controls.modify.mode |= OpenLayers.Control.ModifyFeature.ROTATE;
     }
-    vectors.events.on({
-      "beforefeaturemodified": report,
-      "featuremodified": report,
-      "afterfeaturemodified": report,
-      "vertexmodified": report,
-      "sketchmodified": report,
-      "sketchstarted": report,
-      "sketchcomplete": report
-    });
+    var resize = document.getElementById("resize").checked;
+    if(resize) {
+      controls.modify.mode |= OpenLayers.Control.ModifyFeature.RESIZE;
+      var keepAspectRatio = document.getElementById("keepAspectRatio").checked;
+      if (keepAspectRatio) {
+        controls.modify.mode &= ~OpenLayers.Control.ModifyFeature.RESHAPE;
+      }
+    }
+    var drag = document.getElementById("drag").checked;
+    if(drag) {
+      controls.modify.mode |= OpenLayers.Control.ModifyFeature.DRAG;
+    }
+    if (rotate || drag) {
+      controls.modify.mode &= ~OpenLayers.Control.ModifyFeature.RESHAPE;
+    }
+    controls.modify.createVertices = document.getElementById("createVertices").checked;
+    var sides = parseInt(document.getElementById("sides").value);
+    sides = Math.max(3, isNaN(sides) ? 0 : sides);
+    controls.regular.handler.sides = sides;
+    var irregular =  document.getElementById("irregular").checked;
+    controls.regular.handler.irregular = irregular;
   }
-  controls = {
-    point: new OpenLayers.Control.DrawFeature(vectors, OpenLayers.Handler.Point),
-    line: new OpenLayers.Control.DrawFeature(vectors, OpenLayers.Handler.Path),
-    polygon: new OpenLayers.Control.DrawFeature(vectors, OpenLayers.Handler.Polygon),
-    regular: new OpenLayers.Control.DrawFeature(vectors,
-    OpenLayers.Handler.RegularPolygon, {handlerOptions: {sides: 5}}), modify: new OpenLayers.Control.ModifyFeature(vectors)
-  };
 
-  for(var key in controls) {
-    map.addControl(controls[key]);
+  function toggleControl(element) {
+    for(key in controls) {
+      var control = controls[key];
+      if(element.value == key && element.checked) {
+        control.activate();
+      } else {
+        control.deactivate();
+      }
+    }
   }
-  
-  map.events.register('click', map, handleMapClick);
-  function handleMapClick(e)
-  {
-    var lonlat = map.getLonLatFromViewPortPx(e.xy);
-    var lon = lonlat.lon
-    var lat = lonlat.lat
-    var element = document.getElementById('output');
-    var latElement = document.getElementById('lat');
-    var lonElement = document.getElementById('lon');
-    var out = "";
-    out += "coordinates: " + "longitude: " + lon + " latitude: " + lat;
-    element.innerHTML = out;
-    latElement.innerHTML = lat;
-    lonElement.innerHTML = lon;
-    $.ajax({
-      type: "POST",
-      url: "/format_point",
-      data: { x_coordinate: 24, y_coordinate: 24, project_array_id: 1 }
-      })
-  }
-};
-</script>
-
-
-    <h1 id="title">Project Site</h1>
-    <div id="output">
-    </div>
-    Latitude: <span id="lat"></span><br />
-    Longitude: <span id="lon"></span>
-
-    <%= form_tag('/format_point', method: 'post') do %>
-      <%= label_tag :x_coordinate %>
-      <%= text_field_tag :x_coordinate, params[:x_coordinate]%>
-      <%= text_field_tag :y_coordinate, params[:y_coordinate]%>
-      <%= hidden_field_tag :project_array_id,
-      @project.project_arrays.first.id %>
-      <%= submit_tag "Create Point" %>
-    <% end %>
-
+        
+    </script>
+  <body onload="init()">
+    <h1 id="title">Outline Your Array</h1>
+    <div id="shortdesc">Outline the array - once you have completed
+    the drawing, click submit.</div>
     <div id="map" class="smallmap"></div>
-<div id="controls">
+    <div id="controls">
         <ul id="controlToggle">
             <li>
                 <input type="radio" name="type" value="none" id="noneToggle"
@@ -177,3 +184,5 @@
             </li>
         </ul>
     </div>
+  </body>
+</html>
