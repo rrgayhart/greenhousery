@@ -44,9 +44,12 @@ class NrelCall
   def get_data
     url = solar_data_address
     response = make_call(url)
-    response['outputs']
-    #'intl' 'tmy2' 'tmy3' - the thmys have id city state timezone lat lon elevation distance
-    #http://developer.nrel.gov/docs/solar/data-query-v1/
+    if response['errors'].any?
+      {:error => response['errors'], :output => response['outputs']}
+    else
+      outputs = response['outputs']
+      outputs.first.last
+    end
   end
 
 end
