@@ -7,8 +7,10 @@ gem 'openlayers-rails'
 gem 'gon'
 gem 'sorcery'
 gem 'best_in_place'
+gem 'faraday'
 
 group :testing, :development do
+  gem 'vcr'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'
