@@ -7,7 +7,8 @@
     Length: <%= best_in_place project_array, :length %> feet<br />
     <p>
       <% if project_array.solar_module %>
-        <b>Module Type:</b> <%= project_array.solar_module.display %>
+        <b>Module Type:</b> <%= project_array.solar_module.display
+        %><br />
         Download:
         <%= link_to "Ruby Plugin", project_arrays_path(id: project_array, format:
           "rb") %>
@@ -36,6 +37,12 @@
         <% end %>
       <% end %>
     <br />
-    KW Goal: <br />
+    <p>
+    KW Goal: <%= project_array.kw_goal %>kw<br />
     Predicted KW: <br />
+    Tilt Degree:  <%= project_array.tilt_degrees %> degrees<br />
+    Spacing between panels:  <%= project_array.panel_spacing_side %> inch(es)<br />
+    Spacing between rows:  <%= project_array.panel_spacing_back %> inch(es)<br />
+    Horizontal Orientation:  <%= project_array.horizontal %><br />
+    </p>
   <% end %>

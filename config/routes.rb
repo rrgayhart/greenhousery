@@ -14,9 +14,13 @@ Greenhousery::Application.routes.draw do
   get "signup" => "users#new", :as => "signup"
 
   get "/project_array/:id/edit_modules" => "project_arrays#edit_modules", :as => "edit_modules"
+  
+  get "/project_array/:id/edit_layout" => "project_arrays#edit_layout", :as => "edit_layout"
+  post "update_layout" => "project_arrays#update_layout", :as => "update_layout"
+
   post "update_measurements" => "project_arrays#update_measurements", :as => "update_measurements"
   post "update_module" => "project_arrays#update_module", :as => "update_module"
-  
+
   post "format_point" => "points#format_point", :as => "format"
 
   root 'home#index'

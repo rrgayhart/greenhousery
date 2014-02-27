@@ -1,0 +1,22 @@
+
+<h1><%= @project_array.name %></h1>
+
+   <p>
+        <%= form_for @project_array, as: :post, url:
+        update_layout_path, method: :post do |f| %>
+          <label for="project_array_solar_module_id">
+            Solar Module
+          </label><br />
+          <%= f.hidden_field :id, :value => @project_array.id %>
+          <%= f.label "Inches of Space Between Panels" %>
+          <%= f.number_field :panel_spacing_side %> inch<br />
+          <%= f.label "Spacing Between Rows" %>
+          <%= f.number_field :panel_spacing_back %> inch<br />
+          <%= f.label "Degree of tilt" %>
+          <%= f.number_field :tilt_degrees %><br />
+          <%= f.label "Horizontal Orientation?" %>
+          <%= f.check_box :horizontal %><br />
+          <%= f.label "Desired KW goal" %>
+          <%= f.number_field :kw_goal %><br />
+          <%= f.submit %>
+<% end %>

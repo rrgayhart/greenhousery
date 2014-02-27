@@ -29,7 +29,23 @@ class ProjectArraysController < ApplicationController
   def update
     @project_array = ProjectArray.find(params[:id])
     @project_array.update_attributes(project_array_params)
-    respond_with @project_array
+    if @project_array.kw_goal.blank?
+      redirect_to edit_layout_path(@project_array)
+    else
+      respond_with @project_array
+    end
+  end
+
+  def update_layout
+    new_params = params["post"]
+    @project_array = ProjectArray.find(new_params[:id])
+    @project_array.panel_spacing_side = new_params[:panel_spacing_side]
+    @project_array.panel_spacing_back = new_params[:panel_spacing_back]
+    @project_array.tilt_degrees = new_params[:tilt_degrees]
+    @project_array.horizontal = new_params[:horizontal]
+    @project_array.kw_goal = new_params[:kw_goal]
+    @project_array.save
+    redirect_to @project_array.project
   end
 
   def update_module
@@ -37,7 +53,7 @@ class ProjectArraysController < ApplicationController
     @project_array = ProjectArray.find(new_params[:id])
     @project_array.update_attributes(project_array_params)
     @project_array.create_solar_module(module_update_params)
-    redirect_to @project_array.project
+    redirect_to edit_layout_path(@project_array)
   end
  
   def update_measurements
@@ -53,6 +69,10 @@ class ProjectArraysController < ApplicationController
     @project_array = ProjectArray.find(params[:id])
     gon.latitude = @project_array.project.latitude
     gon.longitude = @project_array.project.longitude
+  end
+
+  def edit_layout
+    @project_array = ProjectArray.find(params[:id])
   end
 
   def edit_modules
