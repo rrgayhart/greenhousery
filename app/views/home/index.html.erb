@@ -1,6 +1,11 @@
+<div class="welcome">
 <h3>Plan Your Solar Project</h3>
-
 <% if current_user %>
+  Welcome Back!
 <% else %>
   <%= link_to 'Join Greenhousery!', new_user_path %>
 <% end %>
+<div class="center-image">
+  <%= image_tag("complete.png") %>
+</div>
+</div>

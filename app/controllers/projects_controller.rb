@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
+    @project.state = params[:state]
     @project.user_id = current_user.id if current_user
     if @project.save
       @project_array = ProjectArray.create(project: @project)

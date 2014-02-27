@@ -12,6 +12,80 @@
  *= require_tree .
  */
 
+body {
+  background-position: center;
+  font-family: Georgia, Times, serif;
+  line-height: 1.4em;
+  margin: 0px;
+  background-color: #7A8B8B;
+}
+
+.wrapper {
+  width: 90%;
+  margin: 20px auto 20px auto;
+  border: 2px solid #000000;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+header {
+  height: 100px;
+  background-color: #f9f2ff;
+}
+
+nav {
+  clear: both;
+  color: #ffffff;
+  background-color: #aeaca8;
+  height: 30px;
+}
+
+nav ul {
+  margin: 0px;
+  padding: 5px 0px 5px 30px;
+}
+
+nav li {
+  display: inline;
+  margin-right: 40px;
+}
+
+.welcome {
+  text-align: center;
+}
+
+#projects {
+  text-align: center;
+}
+
+#new-project {
+  text-align: center;
+}
+
+.button{
+  color: #000000;
+  padding: 5px 5px 5px 5px;
+  width: 200px;
+  height: 200px;
+}
+
+.section {
+  padding: 20px;
+}
+
+#logo {
+  text-decoration: none;
+  color: #000000;
+}
+
+nav li a {
+  color: #ffffff;
+}
+
+nav li a:hover, nav li a.current {
+  color: #000000;
+}
+
 #map {
   height: 500px;
   max-width: 50%;
