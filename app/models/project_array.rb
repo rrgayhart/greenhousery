@@ -7,6 +7,24 @@ class ProjectArray < ActiveRecord::Base
   after_validation :set_name
   before_save :update_square_foot
 
+  def get_number_of_panels
+    horizontal = self.solar_module.width + self.panel_spacing_side
+    vertical = self.solar_module.length + self.panel_spacing_back
+    array_width_feet = Unitwise(self.width, 'foot')
+    array_width_inches = array_width_feet.convert('inch')
+    number_panels_per_row = (array_width_inches / horizontal).value.to_i
+    array_length_feet = Unitwise(self.length, 'foot')
+    array_length_inches = array_length_feet.convert('inch')
+    number_of_rows = (array_length_inches / vertical).value.to_i
+    predicted_panels = number_panels_per_row * number_of_rows
+  end
+
+  def get_predicted_kw
+    watts = get_number_of_panels * self.solar_module.nominal_wattage
+    wattage_unit = Unitwise(watts, 'watt')
+    wattage_unit.convert('kilowatt').value
+  end
+
   def convert_meter_to_feet(unit)
     distance = Unitwise(unit.to_i, 'meter')
     distance.convert('foot').value

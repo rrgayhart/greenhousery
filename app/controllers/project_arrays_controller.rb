@@ -45,6 +45,9 @@ class ProjectArraysController < ApplicationController
     @project_array.horizontal = new_params[:horizontal]
     @project_array.kw_goal = new_params[:kw_goal]
     @project_array.save
+    @project_array.panel_count_predicted = @project_array.get_number_of_panels
+    @project_array.kw_predicted = @project_array.get_predicted_kw
+    @project_array.save
     redirect_to @project_array.project
   end
 
