@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     if @project.save
       @project_array = ProjectArray.create(project: @project)
       @project.get_station_data
-      redirect_to @project
+      redirect_to edit_project_array_path(@project_array)
     else
       render 'new'
     end

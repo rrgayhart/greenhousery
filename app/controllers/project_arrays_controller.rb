@@ -46,7 +46,7 @@ class ProjectArraysController < ApplicationController
     @project_array.length = @project_array.convert_meter_to_feet(new_params[:length])
     @project_array.width = @project_array.convert_meter_to_feet(new_params[:width])
     @project_array.save
-    redirect_to @project_array.project
+    redirect_to edit_modules_path(@project_array)
   end
   
   def edit
@@ -55,10 +55,14 @@ class ProjectArraysController < ApplicationController
     gon.longitude = @project_array.project.longitude
   end
 
+  def edit_modules
+    @project_array = ProjectArray.find(params[:id])
+  end
+
   private
   
   def project_array_params
-    params.require(:project_array).permit(:name, :project_id, :sqft, :solar_module_id, :length, :width, :panel_spacing_side, :panel_spacing_back, :tilt_degrees, :horizontal, :kw_predicted, :kw_goal, :panel_count_predicted, :new_solar_module_brand, :new_solar_module_model, :new_solar_module_length, :new_solar_module_height, :new_solar_module_width, :new_solar_module_nominal_wattage)
+    params.permit(:name, :project_id, :sqft, :solar_module_id, :length, :width, :panel_spacing_side, :panel_spacing_back, :tilt_degrees, :horizontal, :kw_predicted, :kw_goal, :panel_count_predicted, :new_solar_module_brand, :new_solar_module_model, :new_solar_module_length, :new_solar_module_height, :new_solar_module_width, :new_solar_module_nominal_wattage)
   end
 
   def module_update_params

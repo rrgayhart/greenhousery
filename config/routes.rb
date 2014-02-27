@@ -13,6 +13,7 @@ Greenhousery::Application.routes.draw do
   get "logout" => "sessions#destroy", :as => "logout"
   get "signup" => "users#new", :as => "signup"
 
+  get "/project_array/:id/edit_modules" => "project_arrays#edit_modules", :as => "edit_modules"
   post "update_measurements" => "project_arrays#update_measurements", :as => "update_measurements"
   post "update_module" => "project_arrays#update_module", :as => "update_module"
   

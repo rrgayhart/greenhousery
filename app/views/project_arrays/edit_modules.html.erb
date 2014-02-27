@@ -1,0 +1,25 @@
+<h1><%= @project_array.name %></h1>
+
+   <p>
+        <%= form_for @project_array do |f| %>
+          <label for="project_array_solar_module_id">
+            Solar Module
+          </label><br />
+          <%= f.collection_select :solar_module_id,
+          SolarModule.order(:brand), :id, :display, :prompt => "Select a Module"
+          %>
+          <%= f.submit %>
+        <% end %>
+        Or Create One!
+        <%= form_for @project_array, as: :post, url:
+      update_module_path, method: :post do |f| %>
+          or create one:
+          <%= f.hidden_field :id, :value => @project_array.id %>
+          <%= f.text_field :new_solar_module_brand %>
+          <%= f.text_field :new_solar_module_model %>
+          <%= f.number_field :new_solar_module_length, :step => 'any' %>
+          <%= f.number_field :new_solar_module_width, :step => 'any' %>
+          <%= f.number_field :new_solar_module_height, :step => 'any' %>
+          <%= f.number_field :new_solar_module_nominal_wattage %>
+          <%= f.submit %>
+        <% end %>
