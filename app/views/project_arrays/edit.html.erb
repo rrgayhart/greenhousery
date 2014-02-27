@@ -1,0 +1,10 @@
+<h3><%= best_in_place @project_array, :name %></h3>
+<%= form_for @project_array do |f| %>
+  <%= f.label "Length of Array (in meters)" %>
+  <%= f.number_field :length %>
+  <%= f.label "Width of Array (in meters)"%>
+  <%= f.number_field :width %>
+  <%= f.label "Square Footage of Array" %>
+  <%= f.number_field :sqft %>
+  <%= f.submit %>
+<% end %>

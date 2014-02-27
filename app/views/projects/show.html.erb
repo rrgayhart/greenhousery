@@ -1,5 +1,7 @@
 <div id="project-header">
   <h1> <%= best_in_place @project, :name %> </h1>
+  <h2><b>Current Time on Site:</b>
+    <%= Time.now.in_time_zone(@project.station_timezone).strftime("%B %d at %I:%M %p") %></h2>
 </div>
 
 <div id="project-sidebar">
@@ -7,7 +9,7 @@
     <b>Latitude:</b> 
     <%= @project.latitude %><br />
     <b>Longitude:</b>
-    <%= @project.longitude %>
+    <%= @project.longitude %><br />
   </p>
   <p>
    <b>Address:</b>
@@ -22,7 +24,7 @@
     <b><%= @project.station_city %>, <%= @project.station_state %></b><br />
     <b>Distance from project:</b> <%= @project.distance_from_station %> meters<br />
     <b>Station Elevation:</b> <%= @project.station_elevation %> meters<br />
-    <b>Station Timezone:</b> (relative to GMT): <%= @project.station_timezone %>
+  <b>Station Timezone:</b> (relative to GMT): <%= @project.station_timezone %>
  </div>
 </div>
 
