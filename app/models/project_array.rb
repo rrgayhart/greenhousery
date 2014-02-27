@@ -1,8 +1,23 @@
 class ProjectArray < ActiveRecord::Base
   belongs_to :project
+  belongs_to :solar_module
+  attr_accessor :new_solar_module_brand, :new_solar_module_model, :new_solar_module_length, :new_solar_module_width, :new_solar_module_height, :new_solar_module_nominal_wattage
   has_many :points
   validates :project_id, presence: true
   after_validation :set_name
+
+  def create_solar_module(params)
+    solar_module = SolarModule.new
+    solar_module.brand = params[:new_solar_module_brand]
+    solar_module.model = params[:new_solar_module_model]
+    solar_module.length = params[:new_solar_module_length].to_d
+    solar_module.width = params[:new_solar_module_width].to_d
+    solar_module.height = params[:new_solar_module_height].to_d
+    solar_module.nominal_wattage = params[:new_solar_module_nominal_wattage].to_i
+    if solar_module.save
+      self.update_attributes(:solar_module_id => solar_module.id)
+    end
+  end
 
   def set_points(args)
     unless args[:length]

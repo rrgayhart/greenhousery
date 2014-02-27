@@ -26,15 +26,8 @@
  </div>
 </div>
 
- <%= render "maps/second_map" %>
-
 <div id='project-array-data'>
-  <h2>Add Array Details</h2>
-  <% @project_arrays.each do |project_array| %>
-    <%= best_in_place project_array, :name %>
-  <% end %>
+  <%= render 'project_array' %>
 </div>
 
-<div>
-  Double Click when you have completed your outline of the roof or ground area
-</div>
+ <%= render "maps/second_map" %>

@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe "starting a new project", :type => :feature do
-  before :each do
+  before :each, :vcr do
+    nrel_key = ENV['NREL_KEY']
+    Key.create(:service => 'NREL', :key => nrel_key)
     user = FactoryGirl.create(:user)
     visit '/'
     click_link 'Login'
@@ -10,9 +12,8 @@ describe "starting a new project", :type => :feature do
     click_button 'Login'
   end
 
-  it 'can create a new project' do
+  it 'can create a new project', :vcr do
     click_button 'Start a New Project'
-
     within("#project-data") do
       fill_in 'project_name', :with => 'Small Solar Project'
       fill_in 'project_street', :with => '1001 Sherman St.'
@@ -39,5 +40,7 @@ describe "starting a new project", :type => :feature do
       expect(page).to have_content 'Add Array Details'
       expect(page).to have_content 'Small Solar Project Array'
     end
+
+    
   end
 end

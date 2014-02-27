@@ -12,6 +12,8 @@ Greenhousery::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
   get "signup" => "users#new", :as => "signup"
+
+  post "update_module" => "project_arrays#update_module", :as => "update_module"
   
   post "format_point" => "points#format_point", :as => "format"
 
