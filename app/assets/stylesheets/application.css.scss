@@ -54,6 +54,10 @@ nav li {
   text-align: center;
 }
 
+.project-planning-block {
+  text-align: center;
+}
+
 #projects {
   text-align: center;
 }
@@ -88,9 +92,13 @@ nav li a:hover, nav li a.current {
 
 #map {
   height: 500px;
-  max-width: 50%;
+  max-width: 100%;
   border: solid 1px #DDD;
   border-radius: 5px;
+}
+
+#output {
+ font-size: 200%;
 }
 
 .flash-message a {
