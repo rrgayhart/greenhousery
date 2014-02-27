@@ -1,7 +1,6 @@
-<h1>Project Arrays</h1>
 <% @project_arrays.each do |project_array| %>
-    <h3><%= best_in_place project_array, :name %></h3>
-    Square Footage: <%= project_array.sqft %> square feet<br />
+    <h2><%= best_in_place project_array, :name %></h2>
+    Square Footage: <%= project_array.sqft.ceil %> square feet<br />
     
     Width: <%= best_in_place project_array, :width %> feet<br />
     Length: <%= best_in_place project_array, :length %> feet<br />
@@ -38,12 +37,12 @@
       <% end %>
     <br />
     <p>
-    KW Goal: <%= project_array.kw_goal %>kw<br />
-    Max Predicted KW: <%= project_array.kw_predicted %><br />
-    Max Panel Count: <%= project_array.panel_count_predicted %><br />
-    Tilt Degree:  <%= project_array.tilt_degrees %> degrees<br />
-    Spacing between panels:  <%= project_array.panel_spacing_side %> inch(es)<br />
-    Spacing between rows:  <%= project_array.panel_spacing_back %> inch(es)<br />
-    Horizontal Orientation:  <%= project_array.horizontal %><br />
+    <h3>KW Goal: <%= project_array.kw_goal %>kw</h3>
+   <b> Max Predicted KW:</b> <%= project_array.kw_predicted %><br />
+   <b> Max Panel Count:</b> <%= project_array.panel_count_predicted %><br />
+   <b> Tilt Degree:</b>  <%= project_array.tilt_degrees %> degrees<br />
+   <b> Spacing between panels:</b>  <%= project_array.panel_spacing_side %> inch(es)<br />
+   <b> Spacing between rows:</b>  <%= project_array.panel_spacing_back %> inch(es)<br />
+   <b> Horizontal Orientation:</b>  <%= project_array.horizontal %><br />
     </p>
   <% end %>

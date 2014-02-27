@@ -1,10 +1,10 @@
 require 'sketchup.rb'
-UI.menu('PlugIns').add_item('Generate Hyundai HiS-S 230 MG') { Panel.new }
+UI.menu('PlugIns').add_item('Generate Hyundai hiS 230') { Panel.new }
 class Panel
   attr_reader :run, :width, :thickness
   def initialize
-    @run = 64.76
-    @width = 38.7
+    @run = 34.6
+    @width = 68.7
     @thickness = 1.38
     draw_panel
   end
