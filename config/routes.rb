@@ -4,6 +4,7 @@ Greenhousery::Application.routes.draw do
   resources :projects
   resources :project_arrays
   resources :sessions
+  resources :solar_modules
 
   get "home/about"
   get "home/index"
