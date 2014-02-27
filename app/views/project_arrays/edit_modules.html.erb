@@ -1,25 +1,38 @@
-<h1><%= @project_array.name %></h1>
-
+<div class="project-planning-block">
+  <h1><%= best_in_place @project_array, :name %></h1>
+  <h4><%= @project_array.project.address %></h4>
+  Please select a module or add your own module information<br />
+</div>
+<hr>
    <p>
         <%= form_for @project_array do |f| %>
           <label for="project_array_solar_module_id">
-            Solar Module
+            Select a Solar Module
           </label><br />
           <%= f.collection_select :solar_module_id,
           SolarModule.order(:brand), :id, :display, :prompt => "Select a Module"
           %>
-          <%= f.submit %>
+          <%= f.submit "Select Module", :class => 'button' %>
         <% end %>
+<hr>
         Or Create One!
         <%= form_for @project_array, as: :post, url:
       update_module_path, method: :post do |f| %>
-          or create one:
           <%= f.hidden_field :id, :value => @project_array.id %>
+          <%= f.label "Brand:" %>
           <%= f.text_field :new_solar_module_brand %>
-          <%= f.text_field :new_solar_module_model %>
-          <%= f.number_field :new_solar_module_length, :step => 'any' %>
-          <%= f.number_field :new_solar_module_width, :step => 'any' %>
-          <%= f.number_field :new_solar_module_height, :step => 'any' %>
-          <%= f.number_field :new_solar_module_nominal_wattage %>
-          <%= f.submit %>
+          <%= f.label "Model:" %>
+          <%= f.text_field :new_solar_module_model %><br />
+          <%= f.label "Length:" %>
+          <%= f.number_field :new_solar_module_length, :step => 'any'
+        %> (inches) <br />
+          <%= f.label "Width:" %>
+          <%= f.number_field :new_solar_module_width, :step => 'any'
+        %> (inches) <br />
+          <%= f.label "Height:" %>
+          <%= f.number_field :new_solar_module_height, :step => 'any'
+        %> (inches) <br />
+          <%= f.label "Nominal Wattage:" %>
+          <%= f.number_field :new_solar_module_nominal_wattage %> <br />
+          <%= f.submit "Create Custom Module Type", :class => 'button'%>
         <% end %>

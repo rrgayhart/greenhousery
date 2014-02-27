@@ -1,6 +1,9 @@
-
-<h1><%= @project_array.name %></h1>
-
+<div class="project-planning-block">
+  <h1><%= best_in_place @project_array, :name %></h1>
+  <h4><%= @project_array.project.address %></h4>
+  Please select a module or add your own module information<br />
+</div>
+<hr>
    <p>
         <%= form_for @project_array, as: :post, url:
         update_layout_path, method: :post do |f| %>
