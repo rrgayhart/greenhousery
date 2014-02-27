@@ -5,7 +5,8 @@ class NrelCall
   attr_reader :key, :lat, :lon
 
   def initialize(args)
-    @key = Key.where(:service => 'NREL').first.key
+    the_key = Key.first
+    @key = the_key.key
     @lat = args[:lat]
     @lon = args[:lon]
   end

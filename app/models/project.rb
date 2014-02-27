@@ -11,10 +11,10 @@ class Project < ActiveRecord::Base
   def get_station_data
     nrel = NrelCall.new({:lat => self.latitude, :lon => self.longitude})
     data = nrel.get_data
-    unless data[:error]
+    #if !data[:error]
       formatted_data = format_station_data(data)
       self.update_attributes(formatted_data)
-    end
+    #end
   end
 
   def format_station_data(data)

@@ -5,9 +5,7 @@
 <div id="project-sidebar">
   <p>
     <b>Latitude:</b> 
-    <%= @project.latitude %>
-  </p>
-  <p>
+    <%= @project.latitude %><br />
     <b>Longitude:</b>
     <%= @project.longitude %>
   </p>
@@ -18,6 +16,14 @@
    <%= best_in_place @project, :state %> |
    <%= best_in_place @project, :country %>
   </p>
+
+  <div>
+    <h4><b>Nearest Weather Station</b></h4>
+    <b><%= @project.station_city %>, <%= @project.station_state %></b><br />
+    <b>Distance from project:</b> <%= @project.distance_from_station %> meters<br />
+    <b>Station Elevation:</b> <%= @project.station_elevation %> meters<br />
+    <b>Station Timezone:</b> (relative to GMT): <%= @project.station_timezone %>
+ </div>
 </div>
 
  <%= render "maps/second_map" %>

@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
     @project.user_id = current_user.id if current_user
     if @project.save
       @project_array = ProjectArray.create(project: @project)
+      @project.get_station_data
       redirect_to @project
     else
       render 'new'
