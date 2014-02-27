@@ -5,6 +5,9 @@
     <p>
       <% if project_array.solar_module %>
         <b>Module Type:</b> <%= project_array.solar_module.display %>
+        Download:
+        <%= link_to "Ruby Plugin", project_arrays_path(id: project_array, format:
+          "rb") %>
       <% else %>
         <%= form_for project_array do |f| %>
           <label for="project_array_solar_module_id">
@@ -13,6 +16,7 @@
           <%= f.collection_select :solar_module_id,
           SolarModule.order(:brand), :id, :display, :prompt => "Select a Module"
           %>
+          <%= f.submit %>
         <% end %>
         Or Create One!
         <%= form_for project_array, as: :post, url:

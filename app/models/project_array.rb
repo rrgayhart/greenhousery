@@ -6,6 +6,27 @@ class ProjectArray < ActiveRecord::Base
   validates :project_id, presence: true
   after_validation :set_name
 
+  def to_plugin
+    fname = "module_plugin.rb"
+    somefile = File.open(fname, "w")
+    somefile.puts "require 'sketchup.rb'"
+    somefile.puts "UI.menu('PlugIns').add_item('Generate " + self.solar_module.brand + " " + self.solar_module.model + "') { Panel.new }"
+    somefile.puts "class Panel"
+    somefile.puts "  attr_reader :run, :width, :thickness"
+    somefile.puts "  def initialize"
+    somefile.puts "    @run = " + self.solar_module.width.to_s
+    somefile.puts "    @width = " + self.solar_module.length.to_s
+    somefile.puts "    @thickness = " + self.solar_module.height.to_s
+    somefile.puts "    draw_panel"
+    somefile.puts "  end"
+    somefile.puts "  def draw_panel \n    model = Sketchup.active_model\n    group = model.entities.add_group\n    entities = group.entities\n    new_panel = entities.add_face(coordinates[0], coordinates[1], coordinates[2], coordinates[3])\n    new_panel.reverse!\n    new_panel.pushpull(thickness, true)\n    group.to_component\n  end"
+    somefile.puts "  def coordinates\n    x1 = 0\n    x2 = width\n    y1 = 0\n    y2 = run\n    pts = []\n    pts[0] = [x1, y1]\n    pts[1] = [x2, y1]\n    pts[2] = [x2, y2]\n    pts[3] = [x1, y2]\n    pts\n  end"
+    somefile.puts "end"
+    somefile.close
+    file = File.open(fname, "r")
+    file.read
+  end
+
   def create_solar_module(params)
     solar_module = SolarModule.new
     solar_module.brand = params[:new_solar_module_brand]

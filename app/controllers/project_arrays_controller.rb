@@ -1,6 +1,13 @@
 class ProjectArraysController < ApplicationController
   respond_to :html, :json  
 
+  def index
+    @project_array = ProjectArray.find(params[:id])
+    respond_to do |format|
+      format.rb { send_data @project_array.to_plugin }
+    end
+  end
+
   def new
     @project_array = ProjectArray.new
   end
