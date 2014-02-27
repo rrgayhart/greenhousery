@@ -8,6 +8,7 @@ gem 'gon'
 gem 'sorcery'
 gem 'best_in_place'
 gem 'faraday'
+gem 'unitwise'
 
 group :testing, :development do
   gem 'vcr'

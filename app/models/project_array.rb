@@ -5,6 +5,23 @@ class ProjectArray < ActiveRecord::Base
   has_many :points
   validates :project_id, presence: true
   after_validation :set_name
+  before_save :update_square_foot
+
+  def convert_meter_to_feet(unit)
+    distance = Unitwise(unit.to_i, 'meter')
+    distance.convert('foot').value
+  end
+
+  def update_square_foot
+    unless self.width.blank?
+      self.sqft = self.width * self.length
+    end
+  end
+
+  def convert_sq_meter_to_sq_feet(unit)
+    distance = Unitwise(unit.to_i, 'm2')
+    distance.convert('foot2').value
+  end
 
   def to_plugin
     fname = "module_plugin.rb"

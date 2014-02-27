@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140227013927) do
+ActiveRecord::Schema.define(version: 20140227150546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20140227013927) do
     t.integer "project_id"
     t.decimal "sqft"
     t.integer "solar_module_id"
+    t.decimal "length"
+    t.decimal "width"
+    t.decimal "panel_spacing_side",    default: 1.0
+    t.decimal "panel_spacing_back"
+    t.integer "tilt_degrees",          default: 30
+    t.boolean "horizontal",            default: true
+    t.decimal "kw_predicted"
+    t.decimal "kw_goal"
+    t.integer "panel_count_predicted"
   end
 
   add_index "project_arrays", ["project_id"], name: "index_project_arrays_on_project_id", using: :btree

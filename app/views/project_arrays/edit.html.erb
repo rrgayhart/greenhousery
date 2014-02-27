@@ -1,10 +1,16 @@
 <h3><%= best_in_place @project_array, :name %></h3>
-<%= form_for @project_array do |f| %>
+<h4><%= @project_array.project.address %></h4>
+<h4>Using the Map Below - Please fill out length - width and area of
+  the array</h4>
+
+<%= form_for @project_array, as: :post, url: update_measurements_path,
+  method: :post do |f| %>
+  <%= f.hidden_field :id, :value => @project_array.id %>
   <%= f.label "Length of Array (in meters)" %>
-  <%= f.number_field :length %>
-  <%= f.label "Width of Array (in meters)"%>
-  <%= f.number_field :width %>
-  <%= f.label "Square Footage of Array" %>
-  <%= f.number_field :sqft %>
+  <%= f.number_field :length, :step => 'any' %>
+  <%= f.label "Width of Array (in meters)" %>
+  <%= f.number_field :width, :step => 'any' %>
   <%= f.submit %>
 <% end %>
+
+<%= render "maps/map" %>

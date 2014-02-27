@@ -1,7 +1,10 @@
 <h1>Project Arrays</h1>
 <% @project_arrays.each do |project_array| %>
     <h3><%= best_in_place project_array, :name %></h3>
-    Square Footage: <br />
+    Square Footage: <%= project_array.sqft %> square feet<br />
+    
+    Width: <%= best_in_place project_array, :width %> feet<br />
+    Length: <%= best_in_place project_array, :length %> feet<br />
     <p>
       <% if project_array.solar_module %>
         <b>Module Type:</b> <%= project_array.solar_module.display %>
